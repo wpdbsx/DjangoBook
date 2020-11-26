@@ -9,14 +9,14 @@ class Post(models.Model):
     slug = models.SlugField("SLUG",unique=True,allow_unicode=True,help_text="one word for title alias.")
     description = models.CharField(("DESCRIPTION"), max_length=100,blank=True,help_text="simple description text")
     content = models.TextField("CONTENT")
-    created_at = models.DateField(("CREATE DATE"), auto_now_add=True)
-    modify_at = models.DateField(("MODIFY DATE"), auto_now=True)
+    created_dt = models.DateField(("CREATE DATE"), auto_now_add=True)
+    modify_dt = models.DateField(("MODIFY DATE"), auto_now=True)
 
     class Meta :
         verbose_name = "post"
         verbose_name_plural = "posts"
         db_table = "blog_posts"
-        ordering = ('-modify_at',)
+        ordering = ('-modify_dt',)
     
     def __str__(self):
         return self.title
@@ -24,7 +24,7 @@ class Post(models.Model):
     def get_absolute_url(self):
         return reverse("blog:post_detail", args=(self.slug,))
     def get_previous(self):
-        return self.get_previous_by_modify_at() 
+        return self.get_previous_by_modify_dt() 
     def get_next(self):
-        return self.get_next_by_modify_at()
+        return self.get_next_by_modify_dt()
     
